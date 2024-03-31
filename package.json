@@ -1,0 +1,37 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "tsx watch ./src/index.ts"
+  },
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/server": "^4.10.2",
+    "@graphql-tools/schema": "^10.0.3",
+    "@prisma/client": "^5.11.0",
+    "apollo-server-express": "^3.13.0",
+    "express": "^4.19.2",
+    "graphql": "^16.8.1",
+    "tsx": "^4.7.1"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/introspection": "4.0.3",
+    "@graphql-codegen/typescript": "4.0.6",
+    "@graphql-codegen/typescript-document-nodes": "4.0.6",
+    "@graphql-codegen/typescript-resolvers": "4.0.6",
+    "@types/node": "^20.12.2",
+    "nodemon": "^3.1.0",
+    "prisma": "^5.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  }
+}

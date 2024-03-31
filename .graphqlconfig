@@ -1,0 +1,10 @@
+{
+  "schemaPath": "./src/schema/root.graphql",
+  "projects": {
+    "app": {
+      "includes": [
+        "./src/schema/*.graphql"
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres
+    container_name: backend-database-postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend-database
+    ports:
+      - '8085:5432'
+volumes:
+  db_data:
+
+networks:
+  backend-database:
+    driver: bridge
+
+
+    
