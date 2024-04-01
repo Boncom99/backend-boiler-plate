@@ -7,6 +7,6 @@ export const typeDef = gql`
   }
   type Query {
       books: [Book]
-      book(id:Int!): Book
+      bookById(id:Int!): Book
     }
 `;

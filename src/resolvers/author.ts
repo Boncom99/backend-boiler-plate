@@ -2,8 +2,18 @@ import {prisma} from "../database";
 export const authorResolvers= {
     Query: {
         authors: () => {
-            return prisma.author.findMany()
+            return prisma.author.findMany({include: {books: true}})
         },
+        authorById: async (_: any, args: any) => {
+            return prisma.author.findUnique({
+                where: {
+                    id: args.id
+                } ,
+                include: {
+                    books: true
+                }
+            })
+        }
     },
     Mutation: {
         createAuthor: async (_: any, args: any) => {
@@ -12,6 +22,9 @@ export const authorResolvers= {
                     name: args.name,
                     createdAt:  new Date(),
                     updatedAt: new Date()
+                },
+                include: {
+                    books: true
                 }
             })
         },

@@ -4,7 +4,7 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import cors from 'cors';
 import http from 'http';
 import express from 'express';
-import {typeDefs} from "./schemas/schema";
+import {globalTypeDefs} from "./schemas/schema";
 import {resolvers} from "./resolvers/resolvers";
 
 
@@ -18,7 +18,7 @@ const httpServer = http.createServer(app);
 
 
 const server = new ApolloServer<MyContext>({
-    typeDefs,
+    typeDefs:globalTypeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });

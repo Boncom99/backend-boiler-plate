@@ -13,6 +13,6 @@ export const typeDef = gql`
 export const query =gql `
    type Query {
         authors: [Author]
-        author(id:Int!): Author
+        authorById(id:Int!): Author
     }
     `;
