@@ -6,7 +6,11 @@ import http from 'http';
 import express from 'express';
 import {globalTypeDefs} from "./schemas/schema";
 import {resolvers} from "./resolvers/resolvers";
+import admin from 'firebase-admin';
+import {GraphQLError} from "graphql/error";
 
+
+admin.initializeApp();
 
 interface MyContext {
     token?: string;
@@ -20,7 +24,9 @@ const httpServer = http.createServer(app);
 const server = new ApolloServer<MyContext>({
     typeDefs:globalTypeDefs,
     resolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer }),
+    
+],
 });
 // Ensure we wait for our server to start
 await server.start();
@@ -32,7 +38,23 @@ app.use(
     cors<cors.CorsRequest>(),
     express.json(),
     expressMiddleware(server, {
-        context: async ({ req }) => ({ token: req.headers.token }),
+        context: async ({ req, res }) => {
+            const token = req.headers.authorization || '';
+            const userId= await admin.auth()
+                .verifyIdToken(token)
+                .then((decodedToken) => {
+                    return decodedToken.uid;
+                })
+            if(!userId) {
+                throw new GraphQLError('User is not authenticated', {
+                    extensions: {
+                        code: 'UNAUTHENTICATED',
+                        http: { status: 401 },
+                    },
+                });
+            }
+            return {  userId };
+        },
     }),
 );
 
