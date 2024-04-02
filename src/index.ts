@@ -33,13 +33,25 @@ await server.start();
 
 // Set up our Express middleware to handle CORS, body parsing,
 // and our expressMiddleware function.
+app.use('/graphql', (req, res, next) => {
+    console.log(req)
+    return next()
+})
 app.use(
-    '/',
-    cors<cors.CorsRequest>(),
+    '/graphql',
+    cors<cors.CorsRequest>({ origin: ['http://localhost:3000'] }),
     express.json(),
     expressMiddleware(server, {
         context: async ({ req, res }) => {
             const token = req.headers.authorization || '';
+            if(!token) {
+                throw new GraphQLError('User is not authenticated', {
+                    extensions: {
+                        code: 'UNAUTHENTICATED',
+                        http: { status: 401 },
+                    },
+                });
+            }
             const userId= await admin.auth()
                 .verifyIdToken(token)
                 .then((decodedToken) => {
