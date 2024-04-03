@@ -1,4 +1,4 @@
-import {gql} from "apollo-server-express";
+import { gql } from 'apollo-server-express';
 
 export const typeDef = gql`
   type Book {
@@ -6,7 +6,7 @@ export const typeDef = gql`
     author: Author
   }
   type Query {
-      books: [Book]
-      bookById(id:Int!): Book
-    }
+    books: [Book]
+    bookById(id: Int!): Book
+  }
 `;

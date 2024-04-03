@@ -28,7 +28,7 @@ CREATE TABLE "Book" (
     "authorId" INTEGER NOT NULL,
     "publishedAt" TIMESTAMP(3) NOT NULL,
     "pages" INTEGER NOT NULL,
-    "isbn" INTEGER NOT NULL,
+    "isbn" TEXT NOT NULL,
     "imageLink" TEXT NOT NULL,
     "language" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
