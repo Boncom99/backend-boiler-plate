@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/hagopj13/node-express-boilerplate/badge.svg?branch=master)](https://coveralls.io/github/hagopj13/node-express-boilerplate?branch=master)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-A boilerplate/starter project for quickly building Graphql APIs using Node.js,Apollo-server Express, Postgesql, Prisma and Firebase auth.
+A boilerplate/starter project for quickly building Graphql APIs using Node.js,Apollo-server Express, PostgeSQL, Prisma and Firebase auth.
 
 By running a single command, you will get a production-ready Node.js app installed and fully configured on your machine. The app comes with many built-in features, such as authentication using Firebase, request validation, docker support, etc. For more details, check the features list below.
 
@@ -14,8 +14,8 @@ By running a single command, you will get a production-ready Node.js app install
 Clone the repo:
 
 ```bash
-git clone --depth 1 https://github.com/hagopj13/node-express-boilerplate.git
-cd node-express-boilerplate
+git clone git@github.com:Boncom99/server-boiler-plate.git
+cd server-boiler-plate
 ```
 
 Install the dependencies:
@@ -30,6 +30,11 @@ Set the environment variables:
 cp .env.example .env
 
 # open .env and modify the environment variables (if needed)
+```
+
+Docker:
+```
+ docker-compose up -d
 ```
 
 ## Table of Contents
@@ -50,16 +55,16 @@ cp .env.example .env
 
 ## Features
 
-- **NoSQL database**: [MongoDB](https://www.mongodb.com) object data modeling using [Mongoose](https://mongoosejs.com)
-- **Authentication and authorization**: using [passport](http://www.passportjs.org)
+- **PostgreSQL database**: [PostgreSQL](https://www.postgresql.org) using [Prisma](https://www.prisma.io/)
+- **Authentication and authorization**: using [Firebase](https://firebase.google.com/docs/auth)
 - **Validation**: request data validation using [Joi](https://github.com/hapijs/joi)
 - **Logging**: using [winston](https://github.com/winstonjs/winston) and [morgan](https://github.com/expressjs/morgan)
 - **Testing**: unit and integration tests using [Jest](https://jestjs.io)
 - **Error handling**: centralized error handling mechanism
 - **API documentation**: with [swagger-jsdoc](https://github.com/Surnet/swagger-jsdoc) and [swagger-ui-express](https://github.com/scottie1984/swagger-ui-express)
 - **Process management**: advanced production process management using [PM2](https://pm2.keymetrics.io)
-- **Dependency management**: with [Yarn](https://yarnpkg.com)
-- **Environment variables**: using [dotenv](https://github.com/motdotla/dotenv) and [cross-env](https://github.com/kentcdodds/cross-env#readme)
+- **Dependency management**: with [npm](https://www.npmjs.com/)
+- **Environment variables**: using [dotenv](https://github.com/motdotla/dotenv)
 - **Security**: set security HTTP headers using [helmet](https://helmetjs.github.io)
 - **Santizing**: sanitize request data against xss and query injection
 - **CORS**: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
