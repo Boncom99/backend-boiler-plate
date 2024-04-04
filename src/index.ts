@@ -7,8 +7,10 @@ import express from 'express';
 import { globalTypeDefs } from './schemas/schema';
 import { resolvers } from './resolvers/resolvers';
 import admin from 'firebase-admin';
-import { logger } from '../logger.config';
 import { config } from '../config.env';
+import { logger } from './utils/logger';
+import { errorHandler } from './middlewares/error';
+import { GraphQLError } from 'graphql/error';
 
 admin.initializeApp();
 
@@ -28,43 +30,45 @@ const server = new ApolloServer<MyContext>({
 // Ensure we wait for our server to start
 await server.start();
 
-// Set up our Express middleware to handle CORS, body parsing,
-// and our expressMiddleware function.
+app.use(express.urlencoded({ extended: true }));
+app.use(cors<cors.CorsRequest>({ origin: ['http://localhost:3000'] }));
+app.use(errorHandler);
 app.use('/graphql', (req, res, next) => {
   logger.info('Request received');
-  logger.info(JSON.stringify(req.headers));
   return next();
 });
+
 app.use(
   '/graphql',
-  cors<cors.CorsRequest>({ origin: ['http://localhost:3000'] }),
   express.json(),
   expressMiddleware(server, {
-    /*  context: async ({ req, res }) => {
-            const token = req.headers.authorization || '';
-            if(!token) {
-                throw new GraphQLError('User is not authenticated', {
-                    extensions: {
-                        code: 'UNAUTHENTICATED',
-                        http: { status: 401 },
-                    },
-                });
-            }
-            const userId= await admin.auth()
-                .verifyIdToken(token)
-                .then((decodedToken) => {
-                    return decodedToken.uid;
-                })
-            if(!userId) {
-                throw new GraphQLError('User is not authenticated', {
-                    extensions: {
-                        code: 'UNAUTHENTICATED',
-                        http: { status: 401 },
-                    },
-                });
-            }
-            return {  userId };
-        },*/
+    context: async ({ req, res }) => {
+      logger.info(`Request received: ${req.method} ${req.url}`);
+      const token = req.headers.authorization || '';
+      if (!token) {
+        throw new GraphQLError('User is not authenticated', {
+          extensions: {
+            code: 'UNAUTHENTICATED',
+            http: { status: 401 },
+          },
+        });
+      }
+      const userId = await admin
+        .auth()
+        .verifyIdToken(token)
+        .then((decodedToken) => {
+          return decodedToken.uid;
+        });
+      if (!userId) {
+        throw new GraphQLError('User is not authenticated', {
+          extensions: {
+            code: 'UNAUTHENTICATED',
+            http: { status: 401 },
+          },
+        });
+      }
+      return { userId };
+    },
   }),
 );
 
